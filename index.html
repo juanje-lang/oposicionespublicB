@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Interactivo Epistemología</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilo para el cuerpo y fuente Inter */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Fondo gris muy claro */
+        }
+        /* Estilo para el contenedor principal */
+        .main-container {
+            max-width: 1200px; /* Ancho máximo */
+            margin: 0 auto; /* Centrado */
+            padding: 1.5rem;
+        }
+        /* Estilo para el encabezado */
+        .panel-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0; /* Línea divisoria sutil */
+        }
+        .panel-title {
+            font-size: 2.25rem; /* 36px */
+            font-weight: 700;
+            color: #1e3a8a; /* Azul oscuro */
+            margin-bottom: 0.25rem;
+        }
+        .panel-subtitle {
+            font-size: 1.125rem; /* 18px */
+            color: #475569; /* Gris azulado */
+        }
+
+        /* Contenedor para la navegación y los botones de scroll */
+        .theme-nav-wrapper {
+            position: relative; /* Para posicionar los botones de scroll */
+            margin-bottom: 2rem;
+        }
+
+        /* Estilo para la navegación horizontal de temas */
+        .theme-nav-container {
+            overflow-x: auto; /* Scroll horizontal si es necesario */
+            white-space: nowrap; /* Evitar que los botones se rompan en varias líneas */
+            padding-bottom: 1rem; /* Espacio por si aparece barra de scroll (aunque la ocultemos) */
+            margin: 0 2.5rem; /* Espacio para los botones de flecha */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+            scroll-behavior: smooth; /* Scroll suave */
+        }
+        /* Ocultar barra de scroll para Webkit (Chrome, Safari) */
+        .theme-nav-container::-webkit-scrollbar {
+            display: none;
+        }
+        .theme-nav {
+            display: inline-flex; /* Usar inline-flex para que el contenedor se ajuste al contenido */
+            gap: 0.5rem; /* Espacio entre botones */
+        }
+        .theme-button {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid transparent;
+            border-radius: 0.375rem; /* Esquinas redondeadas */
+            background-color: #f1f5f9; /* Fondo gris claro */
+            color: #334155; /* Texto gris oscuro */
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0; /* Evitar que los botones se encojan */
+        }
+        .theme-button:hover {
+            background-color: #e2e8f0; /* Gris más oscuro al pasar el ratón */
+        }
+        .theme-button.active {
+            background-color: #1e3a8a; /* Azul oscuro */
+            color: #ffffff; /* Texto blanco */
+            border-color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        /* Estilos para los botones de scroll */
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            /* Ajustar el translateY para centrarlo respecto a los botones de tema, no al contenedor con padding-bottom */
+            margin-top: -0.5rem; /* Mitad del padding-bottom del contenedor de scroll */
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+            color: #1e3a8a; /* Azul oscuro */
+            border: 1px solid #e2e8f0;
+            border-radius: 50%; /* Círculo */
+            width: 2.5rem; /* Ancho */
+            height: 2.5rem; /* Alto */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .scroll-button:hover {
+            background-color: #ffffff;
+            color: #3b82f6; /* Azul más brillante */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .scroll-button.left {
+            left: 0;
+        }
+        .scroll-button.right {
+            right: 0;
+        }
+        .scroll-button.hidden { /* Clase para ocultar botones si no hay scroll */
+            display: none;
+        }
+         .scroll-button:disabled { /* Estilo para botones deshabilitados */
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+         }
+
+        /* Contenido principal */
+        .content-area {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 0.5rem; /* Esquinas redondeadas */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Sombra suave */
+        }
+        /* Estilo para las secciones de contenido */
+        .content-section {
+            display: none; /* Oculto por defecto */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        /* Mostrar la sección activa */
+        .content-section.active {
+            display: block;
+        }
+        /* Animación de aparición */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Estilo para los títulos de sección */
+        .content-title {
+            color: #1e3a8a; /* Azul oscuro */
+            margin-bottom: 0.5rem;
+        }
+        .content-intro {
+            color: #475569; /* Gris azulado */
+            margin-bottom: 2rem;
+        }
+
+        /* Estilos para el Acordeón */
+        .accordion-item {
+            border: 1px solid #e2e8f0; /* Borde sutil */
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            overflow: hidden; /* Para contener bordes redondeados */
+        }
+        .accordion-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background-color: #f8fafc; /* Fondo muy claro */
+            border: none;
+            text-align: left;
+            font-size: 1rem; /* 16px */
+            font-weight: 600;
+            color: #1e3a8a; /* Azul oscuro */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .accordion-button:hover {
+            background-color: #f1f5f9; /* Gris claro al pasar el ratón */
+        }
+        .accordion-button .accordion-icon {
+            transition: transform 0.3s ease;
+            color: #3b82f6; /* Icono azul */
+        }
+        .accordion-button.open .accordion-icon {
+            transform: rotate(90deg);
+        }
+        .accordion-content {
+            max-height: 0; /* Oculto por defecto */
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            background-color: #ffffff; /* Fondo blanco */
+            padding: 0 1.5rem; /* Padding horizontal */
+        }
+        .accordion-content.open {
+             /* max-height se establecerá dinámicamente con JS */
+             padding: 1.5rem 1.5rem; /* Padding vertical y horizontal cuando está abierto */
+        }
+        .accordion-content ul {
+            list-style: disc;
+            list-style-position: inside;
+            margin-left: 0.5rem;
+            color: #334155; /* Texto gris oscuro */
+        }
+         .accordion-content li {
+            margin-bottom: 0.5rem;
+        }
+         .accordion-content p {
+            color: #334155;
+            margin-bottom: 1rem;
+         }
+         .accordion-content strong { /* Resaltar términos clave si es necesario */
+            color: #1e3a8a;
+            font-weight: 600;
+         }
+
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="text-gray-800">
+
+    <div class="main-container">
+        <header class="panel-header">
+            <h1 class="panel-title">Panel de Estudio Interactivo</h1>
+            <p class="panel-subtitle">Bloque 2: Herramientas II (Epistemología y Filosofía de la Ciencia)</p>
+        </header>
+
+        <div class="theme-nav-wrapper">
+            <button id="scroll-left-btn" class="scroll-button left" aria-label="Desplazar temas a la izquierda">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="theme-nav-container" id="theme-nav-container">
+                 <nav class="theme-nav" id="theme-nav">
+                    <button class="theme-button active" data-target="tema8">Tema 8: Verdad</button>
+                    <button class="theme-button" data-target="tema9">Tema 9: Leyes, Teorías</button>
+                    <button class="theme-button" data-target="tema10">Tema 10: Realidad, Objetividad</button>
+                    <button class="theme-button" data-target="tema11">Tema 11: Lenguaje, Universales</button>
+                    <button class="theme-button" data-target="tema12">Tema 12: A Priori</button>
+                    <button class="theme-button" data-target="tema13">Tema 13: Límites, Irracional</button>
+                    </nav>
+            </div>
+             <button id="scroll-right-btn" class="scroll-button right" aria-label="Desplazar temas a la derecha">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <main class="content-area" id="content-area">
+            <section id="tema8" class="content-section active">
+                <h2 class="text-2xl font-bold content-title">TEMA 8: LA VERDAD EN MATEMÁTICAS Y CIENCIAS EMPÍRICAS</h2>
+                <p class="content-intro">Explora las distintas concepciones de la verdad y cómo se aplican en las ciencias formales (matemáticas) y las ciencias fácticas (naturales y sociales).</p>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            <span>Teorías Fundamentales de la Verdad</span>
+                            <i class="fas fa-chevron-right accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <ul>
+                                <li><strong>Teoría de la Correspondencia:</strong> Verdad como adecuación a la realidad (Aristóteles, Russell, Tarski). Clave en CC. Empíricas. Críticas: definir 'hecho'/'correspondencia', enunciados negativos/universales, términos teóricos.</li>
+                                <li><strong>Teoría de la Coherencia:</strong> Verdad como consistencia interna con un sistema (Hegel, Blanshard). Relevante en CC. Formales. Críticas: sistema coherente puede ser falso, múltiples sistemas posibles.</li>
+                                <li><strong>Teoría Pragmática:</strong> Verdad como utilidad o éxito práctico (Peirce, James). Críticas: lo útil no siempre es verdadero, vaguedad.</li>
+                                <li><strong>Teoría del Consenso:</strong> Verdad como acuerdo comunitario ideal (Habermas). Críticas: ideal difícil de alcanzar, consenso no garantiza verdad.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button">
+                            <span>Verdad en Matemáticas (Ciencias Formales)</span>
+                            <i class="fas fa-chevron-right accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content">
+                            <p><strong>Naturaleza:</strong> Consistencia interna, independencia de la experiencia (a priori), certeza (históricamente), verdad formal (validez deductiva).</p>
+                            <p><strong>Posiciones filosóficas:</strong> Logicismo (Frege, Russell), Formalismo (Hilbert), Intuicionismo (Brouwer), Platonismo/Realismo (Gödel), Empirismo (Mill).</p>
+                            <p><strong>Teoremas de Incompletitud de Gödel:</strong> Límites de la formalización; verdad matemática trasciende demostrabilidad formal.</p>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-button">
+                            <span>Verdad en Ciencias Empíricas (Naturales y Sociales)</span>
+                            <i class="fas fa-chevron-right accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content">
+                             <p><strong>Naturaleza:</strong> Correspondencia como ideal (indirecta), contingencia (a posteriori), verificabilidad/falsabilidad, probabilidad y provisionalidad.</p>
+                             <p><strong>Camino a la verdad:</strong> De verificación a falsación (Popper), Verosimilitud (Popper y desarrollos posteriores).</p>
+                             <p><strong>Ciencias Sociales:</strong> Desafíos (objeto humano, intenciones), debate Explicación (Erklären) vs. Comprensión (Verstehen - Dilthey), objetividad y valores (Weber), Naturalismo vs. Autonomía.</p>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-button">
+                            <span>Análisis Comparativo y Síntesis</span>
+                            <i class="fas fa-chevron-right accordion-icon"></i>
+                        </button>
+                        <div class="accordion-content">
+                             <p><strong>Matemáticas:</strong> Coherencia, a priori, certeza formal.</p>
+                             <p><strong>Ciencias Empíricas:</strong> Correspondencia (ideal), a posteriori, provisionalidad, falsabilidad.</p>
+                             <p>Las teorías pragmática y del consenso iluminan aspectos de la práctica científica pero son menos centrales para definir la verdad ontológica/semántica.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tema9" class="content-section">
+                 <h2 class="text-2xl font-bold content-title">TEMA 9: NATURALEZA DE LEYES, TEORÍAS Y MODELOS CIENTÍFICOS</h2>
+                 <p class="content-intro">Analiza las estructuras del conocimiento científico y la distinción entre cómo se generan las ideas y cómo se validan.</p>
+                 <div class="accordion">
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>Naturaleza de Leyes, Teorías y Modelos</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                            <ul>
+                                <li><strong>Leyes Científicas:</strong> Enunciados de regularidades (universales/estadísticas). Funciones: describir, predecir, explicar (Hempel). Debate: ¿descripción (humeano) o necesidad (realista)? Fundamentales vs. Fenomenológicas (Cartwright).</li>
+                                <li><strong>Teorías Científicas:</strong> Sistemas conceptuales amplios (leyes, principios, términos teóricos). Funciones: organizar, explicar, predecir, guiar. Estructura: Visión Sintáctica (axiomas, T/O, reglas - Emp. Lógico) vs. Semántica (clase de modelos - Suppes, Giere).</li>
+                                <li><strong>Modelos Científicos:</strong> Representaciones simplificadas/idealizadas. Funciones: explorar, predecir, explicar, visualizar. Mediadores entre teoría y realidad.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>Contexto de Descubrimiento vs. Justificación</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <p><strong>Distinción Clásica (Reichenbach):</strong> Descubrimiento (generar ideas) vs. Justificación (validar ideas). Visión tradicional: solo justificación es filosófica.</p>
+                            <p><strong>Críticas:</strong> Artificialidad, interdependencia. Racionalidad en descubrimiento (Hanson, Peirce - abducción). Kuhn (paradigma influye). Feyerabend ("todo vale").</p>
+                            <p><strong>Modelos Alternativos:</strong> Laudan (resolución problemas), Echeverría (4 contextos: enseñanza, innovación, evaluación, aplicación).</p>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>Perspectivas Filosóficas sobre Leyes</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <ul>
+                                <li><strong>Realismo Nómico:</strong> Leyes describen relaciones objetivas y necesarias (Armstrong - universales).</li>
+                                <li><strong>Regularismo (Humeano):</strong> Leyes son descripciones de regularidades contingentes.</li>
+                                <li><strong>Antirrealismo/Instrumentalismo (Cartwright):</strong> Leyes fundamentales son idealizaciones, fenomenológicas son más descriptivas.</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>Teorías: Visiones Sintáctica vs. Semántica</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <ul>
+                                <li><strong>Visión Sintáctica (Concepción Heredada):</strong> Teorías como sistemas axiomáticos formalizados (Carnap, Hempel). Distinción T/O. Criticada por rigidez.</li>
+                                <li><strong>Visión Semántica (Modelo-Teórica):</strong> Teoría = clase de modelos que la satisfacen (Suppes, van Fraassen, Giere). Foco en estructuras y representación. Más cercana a la práctica científica.</li>
+                            </ul>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+             <section id="tema10" class="content-section">
+                 <h2 class="text-2xl font-bold content-title">TEMA 10: CONSTRUCCIÓN CIENTÍFICA DE LA REALIDAD, DETERMINISMO E INDETERMINISMO; EL POSTULADO DE LA OBJETIVIDAD</h2>
+                 <p class="content-intro">Examina cómo la ciencia modela la realidad, el debate sobre la predeterminación y el ideal de objetividad científica.</p>
+                 <div class="accordion">
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>La Construcción Científica de la Realidad</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <ul>
+                                <li><strong>Realismo Científico:</strong> Ciencia busca descripciones verdaderas (aprox.) de realidad independiente. Entidades teóricas reales ('no milagro'). Variantes: Crítico (Bhaskar), Estructural.</li>
+                                <li><strong>Constructivismo Social:</strong> Énfasis en factores sociales/culturales. 'Hechos' construidos. Estudios de Laboratorio (Latour), ANT, Hacking ('Making Up People', efecto bucle).</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>Determinismo e Indeterminismo</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <p><strong>Definiciones:</strong> Determinismo (todo evento es necesario) vs. Indeterminismo (existe azar/contingencia).</p>
+                            <p><strong>Argumentos Científicos:</strong> Mecánica Clásica (determinista), Cuántica (indeterminista en interp. estándar), Teoría del Caos (determinista pero impredecible).</p>
+                            <p><strong>Libre Albedrío:</strong> Incompatibilismo vs. Compatibilismo.</p>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>El Postulado de la Objetividad</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <p><strong>Definición Tradicional:</strong> Conocimiento independiente del sujeto, imparcial, neutral.</p>
+                             <p><strong>Weber:</strong> Neutralidad valorativa (Werturteilsfreiheit) vs. Relevancia valorativa (Wertbeziehung).</p>
+                            <p><strong>Críticas:</strong> Carga teórica (Hanson, Kuhn), Paradigmas (Kuhn), Epistemología Feminista (Haraway, Harding, Longino), Influencia de valores.</p>
+                            <p><strong>Reconceptualizaciones:</strong> Control de sesgos, perspectivas críticas, logro social/metodológico.</p>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+             <section id="tema11" class="content-section">
+                 <h2 class="text-2xl font-bold content-title">TEMA 11: CONOCIMIENTO Y LENGUAJE: EL PROBLEMA DE LOS CONCEPTOS UNIVERSALES</h2>
+                 <p class="content-intro">Explora la relación entre conocimiento y lenguaje, y el problema filosófico sobre la existencia y naturaleza de los conceptos generales.</p>
+                 <div class="accordion">
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>Interacción Conocimiento y Lenguaje</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <p>Lenguaje como vehículo y molde del pensamiento.</p>
+                            <p><strong>Hipótesis Sapir-Whorf:</strong> Lengua influye/determina pensamiento. Críticas: universales lingüísticos (Chomsky), lenguaje del pensamiento (Fodor, Pinker).</p>
+                            <p><strong>Wittgenstein:</strong> Tractatus (lenguaje figura hechos) vs. Investigaciones (juegos de lenguaje, significado=uso).</p>
+                            <p><strong>Hermenéutica (Gadamer):</strong> Lenguaje como medio universal de comprensión.</p>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>El Problema de los Conceptos Universales</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <p>¿Existen propiedades generales ('rojo', 'justicia') como entidades reales?</p>
+                            <ul>
+                                <li><strong>Realismo Exagerado (Platonismo):</strong> Universales existen separados (ante rem).</li>
+                                <li><strong>Realismo Moderado (Aristotelismo):</strong> Universales existen en las cosas (in re), conocidos por abstracción (post rem).</li>
+                                <li><strong>Nominalismo:</strong> Niega existencia real. Solo individuos. Términos son nombres/conceptos (Roscelino, Abelardo, Ockham, Quine).</li>
+                                <li><strong>Realismo Científico (Armstrong):</strong> Leyes como relaciones entre universales.</li>
+                            </ul>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+            <section id="tema12" class="content-section">
+                 <h2 class="text-2xl font-bold content-title">TEMA 12: LOS ELEMENTOS A PRIORI EN EL CONOCIMIENTO</h2>
+                 <p class="content-intro">Aborda el conocimiento cuya justificación es independiente de la experiencia sensorial.</p>
+                  <div class="accordion">
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>Definición, Contraste y Debate Histórico</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <p><strong>Conocimiento a priori:</strong> Justificación independiente de experiencia (universal, necesario - Lógica, Matemáticas).</p>
+                            <p><strong>Conocimiento a posteriori:</strong> Justificación basada en experiencia (contingente, particular - CC. Empíricas).</p>
+                            <p><strong>Debate:</strong> Racionalismo (admite a priori sustantivo - Descartes) vs. Empirismo (niega/minimiza a priori - Locke, Hume).</p>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>La Síntesis Kantiana</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <p>Conocimiento empieza con experiencia, pero no todo procede de ella.</p>
+                            <ul>
+                                <li><strong>Formas a priori de la Sensibilidad:</strong> Espacio y Tiempo.</li>
+                                <li><strong>Categorías a priori del Entendimiento:</strong> Conceptos puros que estructuran pensamiento (sustancia, causalidad).</li>
+                                <li><strong>Juicios Sintéticos a priori:</strong> A priori pero añaden información (matemáticas, principios física).</li>
+                                <li><strong>Distinción Analítico/Sintético.</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-button"><span>Críticas Posteriores</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                            <ul>
+                                <li><strong>Empirismo Lógico:</strong> Reduce a priori a analítico (convención lingüística).</li>
+                                <li><strong>Quine:</strong> Crítica a distinción analítico/sintético, holismo epistemológico.</li>
+                                <li><strong>Kripke:</strong> Necesario a posteriori (Agua=H2O) y Contingente a priori (barra estándar).</li>
+                            </ul>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+             <section id="tema13" class="content-section">
+                 <h2 class="text-2xl font-bold content-title">TEMA 13: LOS LÍMITES DEL CONOCIMIENTO HUMANO Y EL PROBLEMA DE LO IRRACIONAL</h2>
+                 <p class="content-intro">Examina las fronteras del saber humano y el estatus de lo que escapa a la razón.</p>
+                 <div class="accordion">
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>Los Límites del Conocimiento Humano</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <p><strong>Perspectivas Históricas:</strong> Antigüedad/Medievo (límite=ser), Modernidad (Locke, Hume - experiencia; Kant - fenómeno vs. noúmeno).</p>
+                             <p><strong>Tipos de Límites:</strong> Prácticos vs. Teóricos, Intrínsecos (razón), Lingüísticos (Wittgenstein), Metodológicos (Popper), Formalización (Gödel), Objetividad, Predictibilidad (Caos), Complejidad.</p>
+                             <p><strong>Agnosticismo:</strong> Imposibilidad de conocer ciertas realidades.</p>
+                        </div>
+                    </div>
+                     <div class="accordion-item">
+                        <button class="accordion-button"><span>El Problema de lo Irracional</span><i class="fas fa-chevron-right accordion-icon"></i></button>
+                        <div class="accordion-content">
+                             <p><strong>Definiciones:</strong> Contrario/ajeno/inferior/superior/opuesto a la razón. No racional vs. Irracional.</p>
+                             <p><strong>Irracionalidad Cognitiva (Kahneman & Tversky):</strong> Sesgos y heurísticas.</p>
+                             <p><strong>En la Filosofía:</strong> Tradición racionalista, Kant, Hegel, Irracionalistas (Schopenhauer, Kierkegaard, Nietzsche), Fenomenología/Existencialismo, Psicoanálisis (Freud), Intuicionismo (Bergson).</p>
+                             <p>Lo Irracional como límite de la razón.</p>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Selección de elementos del DOM
+        const themeButtons = document.querySelectorAll('.theme-button');
+        const contentSections = document.querySelectorAll('.content-section');
+        const accordionButtons = document.querySelectorAll('.accordion-button');
+        const themeNavContainer = document.getElementById('theme-nav-container');
+        const scrollLeftBtn = document.getElementById('scroll-left-btn');
+        const scrollRightBtn = document.getElementById('scroll-right-btn');
+
+        // --- Funcionalidad de Navegación de Temas ---
+        function showContent(targetId) {
+            contentSections.forEach(section => section.classList.remove('active'));
+            themeButtons.forEach(button => button.classList.remove('active'));
+
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) targetSection.classList.add('active');
+
+            const activeButton = document.querySelector(`.theme-button[data-target="${targetId}"]`);
+            if (activeButton) activeButton.classList.add('active');
+        }
+
+        themeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-target');
+                showContent(targetId);
+            });
+        });
+
+        // --- Funcionalidad de Acordeón ---
+        function openAccordion(button, content) {
+            button.classList.add('open');
+            button.setAttribute('aria-expanded', 'true');
+            content.classList.add('open');
+            content.style.maxHeight = content.scrollHeight + 'px';
+        }
+
+        function closeAccordion(button, content) {
+            button.classList.remove('open');
+            button.setAttribute('aria-expanded', 'false');
+            content.classList.remove('open');
+            content.style.maxHeight = null;
+        }
+
+        accordionButtons.forEach(button => {
+            button.setAttribute('aria-expanded', 'false');
+            const content = button.nextElementSibling;
+            if (content && content.classList.contains('accordion-content')) {
+                button.addEventListener('click', () => {
+                    const isOpen = button.classList.contains('open');
+                    if (isOpen) {
+                        closeAccordion(button, content);
+                    } else {
+                        openAccordion(button, content);
+                    }
+                });
+            }
+        });
+
+        // --- Funcionalidad de Scroll Horizontal con Botones ---
+        const scrollAmount = 200; // Cantidad de píxeles a desplazar
+
+        function checkScrollButtons() {
+            // Pequeña tolerancia para comparaciones de punto flotante
+            const tolerance = 1;
+            const maxScrollLeft = themeNavContainer.scrollWidth - themeNavContainer.clientWidth;
+
+            // Habilitar/deshabilitar botón izquierdo
+            scrollLeftBtn.disabled = themeNavContainer.scrollLeft <= tolerance;
+
+            // Habilitar/deshabilitar botón derecho
+            scrollRightBtn.disabled = themeNavContainer.scrollLeft >= maxScrollLeft - tolerance;
+
+             // Ocultar botones si no hay necesidad de scroll
+             if (themeNavContainer.scrollWidth <= themeNavContainer.clientWidth) {
+                scrollLeftBtn.classList.add('hidden');
+                scrollRightBtn.classList.add('hidden');
+             } else {
+                 scrollLeftBtn.classList.remove('hidden');
+                 scrollRightBtn.classList.remove('hidden');
+             }
+        }
+
+        scrollLeftBtn.addEventListener('click', () => {
+            themeNavContainer.scrollLeft -= scrollAmount;
+        });
+
+        scrollRightBtn.addEventListener('click', () => {
+            themeNavContainer.scrollLeft += scrollAmount;
+        });
+
+        // Verificar estado de botones al cargar y al hacer scroll o redimensionar
+        themeNavContainer.addEventListener('scroll', checkScrollButtons);
+        window.addEventListener('resize', checkScrollButtons);
+
+        // Llamada inicial para establecer el estado correcto de los botones
+        // Usar setTimeout para asegurar que el layout esté calculado
+        setTimeout(checkScrollButtons, 100);
+
+
+        // Mostrar el primer tema por defecto al cargar
+        showContent('tema8');
+
+    </script>
+</body>
+</html>
