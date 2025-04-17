@@ -127,7 +127,7 @@
         .content-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .content-title { color: #1e3a8a; margin-bottom: 0.5rem; }
-        .content-intro { color: #475569; margin-bottom: 2rem; }
+        .content-intro { color: #475569; margin-bottom: 2rem; line-height: 1.6; }
 
         /* Estilos para el Acordeón */
         .accordion-item {
@@ -158,24 +158,36 @@
         .accordion-content {
             max-height: 0; /* Oculto por defecto */
             overflow: hidden;
-            /* Transición solo para max-height */
             transition: max-height 0.4s ease-in-out;
             background-color: #ffffff;
-            /* Padding se aplica siempre, pero solo es visible cuando max-height > 0 */
-            padding: 0 1.5rem;
+            padding: 0 1.5rem; /* Padding horizontal se mantiene */
+            line-height: 1.6; /* Mejorar legibilidad */
         }
         .accordion-content.open {
-             /* Usar un valor suficientemente grande que acomode el contenido */
-             max-height: 1000px; /* Ajustar si se espera contenido más largo */
-             /* El padding vertical se aplica cuando está abierto */
+             max-height: 1500px; /* Aumentado por si el contenido es más largo */
              padding-top: 1.5rem;
              padding-bottom: 1.5rem;
-             /* La transición de padding se elimina para evitar conflictos */
         }
-        .accordion-content ul { list-style: disc; list-style-position: inside; margin-left: 0.5rem; color: #334155; }
+        .accordion-content h4 { /* Estilo para subtítulos dentro del acordeón */
+             font-weight: 600;
+             color: #1e40af; /* Azul un poco más oscuro */
+             margin-top: 1rem;
+             margin-bottom: 0.5rem;
+        }
+        .accordion-content h4:first-child {
+             margin-top: 0;
+        }
+        .accordion-content ul { list-style: disc; list-style-position: inside; margin-left: 0.5rem; color: #334155; margin-bottom: 1rem; }
         .accordion-content li { margin-bottom: 0.5rem; }
         .accordion-content p { color: #334155; margin-bottom: 1rem; }
         .accordion-content strong { color: #1e3a8a; font-weight: 600; }
+        .accordion-content .critica { /* Estilo para destacar críticas */
+            font-style: italic;
+            color: #64748b; /* Gris */
+            margin-left: 1rem;
+            border-left: 2px solid #cbd5e1;
+            padding-left: 0.75rem;
+        }
 
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -212,7 +224,7 @@
         <main class="content-area" id="content-area">
             <section id="tema8" class="content-section active">
                 <h2 class="text-2xl font-bold content-title">TEMA 8: LA VERDAD EN MATEMÁTICAS Y CIENCIAS EMPÍRICAS</h2>
-                <p class="content-intro">Explora las distintas concepciones de la verdad y cómo se aplican en las ciencias formales (matemáticas) y las ciencias fácticas (naturales y sociales).</p>
+                <p class="content-intro">Este tema examina la noción crucial de 'verdad', explorando cómo su significado y los criterios para establecerla difieren entre las matemáticas (ciencias formales) y las ciencias empíricas (naturales y sociales), así como las diversas teorías filosóficas propuestas para comprenderla.</p>
                 <div class="accordion">
                     <div class="accordion-item">
                         <button class="accordion-button">
@@ -220,12 +232,19 @@
                             <i class="fas fa-chevron-right accordion-icon"></i>
                         </button>
                         <div class="accordion-content">
-                            <ul>
-                                <li><strong>Teoría de la Correspondencia:</strong> Verdad como adecuación a la realidad (Aristóteles, Russell, Tarski). Clave en CC. Empíricas. Críticas: definir 'hecho'/'correspondencia', enunciados negativos/universales, términos teóricos.</li>
-                                <li><strong>Teoría de la Coherencia:</strong> Verdad como consistencia interna con un sistema (Hegel, Blanshard). Relevante en CC. Formales. Críticas: sistema coherente puede ser falso, múltiples sistemas posibles.</li>
-                                <li><strong>Teoría Pragmática:</strong> Verdad como utilidad o éxito práctico (Peirce, James). Críticas: lo útil no siempre es verdadero, vaguedad.</li>
-                                <li><strong>Teoría del Consenso:</strong> Verdad como acuerdo comunitario ideal (Habermas). Críticas: ideal difícil de alcanzar, consenso no garantiza verdad.</li>
-                            </ul>
+                            <p>Las teorías filosóficas buscan responder qué es la verdad y cómo distinguirla del error. Las principales son:</p>
+                            <h4>1. Teoría de la Correspondencia</h4>
+                            <p>Es la visión más intuitiva: una afirmación es verdadera si se corresponde con los hechos de la realidad. Su origen se remonta a <strong>Aristóteles</strong> y defensores modernos incluyen a <strong>Russell</strong> y <strong>Tarski</strong> (con su teoría semántica). Es la teoría dominante en las <strong>ciencias empíricas</strong>, que buscan describir el mundo. El criterio es la verificación empírica.</p>
+                            <p class="critica"><strong>Críticas:</strong> Resulta difícil definir qué es un 'hecho' y la 'correspondencia', especialmente para enunciados negativos, universales o sobre entidades no observables. La vaguedad del lenguaje y paradojas como la del mentiroso o la del cuervo (Hempel) también plantean problemas.</p>
+                            <h4>2. Teoría de la Coherencia</h4>
+                            <p>La verdad reside en la consistencia lógica de una proposición con un sistema más amplio de creencias aceptadas (<strong>Hegel, Blanshard</strong>). Es particularmente relevante para las <strong>ciencias formales</strong> (lógica, matemáticas), donde la verdad de un teorema depende de su derivabilidad dentro de un sistema axiomático consistente.</p>
+                             <p class="critica"><strong>Críticas:</strong> La coherencia es necesaria pero no suficiente; un sistema puede ser coherente pero falso (ej. ficción). Pueden existir múltiples sistemas coherentes incompatibles.</p>
+                             <h4>3. Teoría Pragmática</h4>
+                             <p>Identifica la verdad con la utilidad, el éxito práctico o las consecuencias beneficiosas (<strong>Peirce, James</strong>). Una idea es verdadera si 'funciona'. En ciencia, se relaciona con la capacidad predictiva o de resolución de problemas (instrumentalismo).</p>
+                             <p class="critica"><strong>Críticas:</strong> Una creencia útil puede ser falsa (ej. mecánica newtoniana). Los conceptos de 'utilidad' y 'éxito' pueden ser vagos o subjetivos.</p>
+                             <h4>4. Teoría del Consenso</h4>
+                             <p>Define la verdad como aquello acordado por una comunidad en condiciones ideales de diálogo racional (<strong>Habermas</strong>). Relevante para entender aspectos sociales de la ciencia (consenso científico, revisión por pares).</p>
+                              <p class="critica"><strong>Críticas:</strong> La 'comunidad ideal' es difícil de realizar. El consenso histórico no garantiza la verdad (comunidades pueden equivocarse).</p>
                         </div>
                     </div>
                     <div class="accordion-item">
@@ -234,9 +253,25 @@
                             <i class="fas fa-chevron-right accordion-icon"></i>
                         </button>
                         <div class="accordion-content">
-                            <p><strong>Naturaleza:</strong> Consistencia interna, independencia de la experiencia (a priori), certeza (históricamente), verdad formal (validez deductiva).</p>
-                            <p><strong>Posiciones filosóficas:</strong> Logicismo (Frege, Russell), Formalismo (Hilbert), Intuicionismo (Brouwer), Platonismo/Realismo (Gödel), Empirismo (Mill).</p>
-                            <p><strong>Teoremas de Incompletitud de Gödel:</strong> Límites de la formalización; verdad matemática trasciende demostrabilidad formal.</p>
+                            <p>Las matemáticas, como ciencia formal, tratan con entidades abstractas e ideales, no con hechos empíricos.</p>
+                            <h4>Naturaleza de la Verdad Matemática:</h4>
+                            <ul>
+                                <li><strong>Consistencia y Coherencia:</strong> La verdad se entiende principalmente como consistencia interna dentro de un sistema axiomático. Un teorema es verdadero si se deriva lógicamente de los axiomas.</li>
+                                <li><strong>Independencia de la Experiencia (A priori):</strong> Las verdades matemáticas no requieren validación empírica; se conocen independientemente de la experiencia (analíticas o sintéticas a priori según Kant).</li>
+                                <li><strong>Certeza y Autoevidencia (históricamente):</strong> Se percibían como verdades ciertas y basadas en axiomas autoevidentes (noción hoy controvertida).</li>
+                                <li><strong>Verdad Formal:</strong> Conformidad con reglas de manipulación de símbolos dentro de un sistema, sin referencia necesaria a objetos externos (validez deductiva).</li>
+                            </ul>
+                             <h4>Posiciones Filosóficas:</h4>
+                             <ul>
+                                 <li><strong>Logicismo (Frege, Russell):</strong> Reduce las matemáticas a la lógica.</li>
+                                 <li><strong>Formalismo (Hilbert):</strong> Matemáticas como juego de símbolos; verdad = consistencia del sistema.</li>
+                                 <li><strong>Intuicionismo (Brouwer):</strong> Matemáticas como construcción mental; verdad = constructibilidad.</li>
+                                 <li><strong>Platonismo/Realismo (Gödel):</strong> Objetos matemáticos existen objetivamente en un reino abstracto; verdad = descubrimiento.</li>
+                                 <li><strong>Empirismo (Mill):</strong> Verdades matemáticas como generalizaciones inductivas masivas.</li>
+                                 <li><strong>Ficcionalismo:</strong> Enunciados matemáticos no literalmente verdaderos (objetos ficticios útiles).</li>
+                             </ul>
+                             <h4>Impacto de los Teoremas de Gödel:</h4>
+                             <p>Los <strong>Teoremas de Incompletitud de Gödel</strong> demostraron que cualquier sistema formal consistente y suficientemente potente es incompleto (verdades indemostrables) y no puede probar su propia consistencia. Esto limitó el programa formalista de Hilbert y sugirió que la verdad matemática no se equipara totalmente a la demostrabilidad formal, abriendo puertas al intuicionismo o platonismo.</p>
                         </div>
                     </div>
                      <div class="accordion-item">
@@ -245,9 +280,18 @@
                             <i class="fas fa-chevron-right accordion-icon"></i>
                         </button>
                         <div class="accordion-content">
-                             <p><strong>Naturaleza:</strong> Correspondencia como ideal (indirecta), contingencia (a posteriori), verificabilidad/falsabilidad, probabilidad y provisionalidad.</p>
-                             <p><strong>Camino a la verdad:</strong> De verificación a falsación (Popper), Verosimilitud (Popper y desarrollos posteriores).</p>
-                             <p><strong>Ciencias Sociales:</strong> Desafíos (objeto humano, intenciones), debate Explicación (Erklären) vs. Comprensión (Verstehen - Dilthey), objetividad y valores (Weber), Naturalismo vs. Autonomía.</p>
+                             <p>Las ciencias empíricas buscan describir, explicar y predecir fenómenos del mundo real basándose en la observación y experimentación.</p>
+                             <h4>Naturaleza de la Verdad Empírica:</h4>
+                             <ul>
+                                 <li><strong>Correspondencia como Ideal:</strong> Se aspira a que los enunciados se adecúen a los hechos, aunque a menudo de forma indirecta (especialmente para leyes y teorías).</li>
+                                 <li><strong>Contingencia y A Posteriori:</strong> Son verdades que podrían haber sido de otra manera y se conocen a través de la experiencia.</li>
+                                 <li><strong>Contrastabilidad (Verificabilidad/Falsabilidad):</strong> El conocimiento debe poderse comparar con la experiencia. Popper destacó la <strong>falsabilidad</strong> como criterio clave: las teorías universales no pueden verificarse completamente, pero sí refutarse.</li>
+                                 <li><strong>Probabilidad y Provisionalidad:</strong> Dado el problema de la inducción, el conocimiento fáctico se considera probable y sujeto a revisión, no definitivo como en las ciencias formales.</li>
+                             </ul>
+                             <h4>El Camino hacia la Verdad Empírica:</h4>
+                             <p>Del verificacionismo (empirismo lógico) se pasó al <strong>falsacionismo</strong> de Popper: la ciencia progresa refutando hipótesis. La verdad actúa como ideal regulador. Ante la dificultad de que las teorías sean estrictamente verdaderas, Popper introdujo la <strong>verosimilitud</strong> (aproximación a la verdad), concepto complejo y aún debatido.</p>
+                             <h4>Particularidades de las Ciencias Sociales:</h4>
+                             <p>Enfrentan desafíos por su objeto de estudio (seres humanos, intenciones, cultura). Surge el debate <strong>Explicación (Erklären) vs. Comprensión (Verstehen)</strong> (Dilthey): ¿buscar leyes causales como en CC. Naturales o interpretar significados? También se discute la <strong>objetividad y los valores</strong> (Weber y su neutralidad valorativa) y si deben seguir el modelo naturalista o tener autonomía metodológica.</p>
                         </div>
                     </div>
                      <div class="accordion-item">
@@ -256,9 +300,10 @@
                             <i class="fas fa-chevron-right accordion-icon"></i>
                         </button>
                         <div class="accordion-content">
-                             <p><strong>Matemáticas:</strong> Coherencia, a priori, certeza formal.</p>
-                             <p><strong>Ciencias Empíricas:</strong> Correspondencia (ideal), a posteriori, provisionalidad, falsabilidad.</p>
-                             <p>Las teorías pragmática y del consenso iluminan aspectos de la práctica científica pero son menos centrales para definir la verdad ontológica/semántica.</p>
+                             <p>La verdad matemática se basa en la <strong>coherencia</strong> interna, es <strong>a priori</strong> y formal. La verdad empírica aspira a la <strong>correspondencia</strong> con hechos, es <strong>a posteriori</strong>, provisional y se valida por contrastación (idealmente, falsación).</p>
+                             <p>Las diferentes filosofías (logicismo, formalismo, intuicionismo en matemáticas; empirismo lógico, falsacionismo, realismo en CC. empíricas) reflejan estas diferencias.</p>
+                             <p>La dificultad de verificación/falsación completa y la definición de verosimilitud subrayan la complejidad de la verdad empírica. Enfoques como los de Kuhn o Lakatos relativizan la verdad absoluta centrándose en la resolución de problemas dentro de paradigmas o programas de investigación.</p>
+                             <p>La distinción entre CC. Naturales y Sociales radica más en complejidades metodológicas (reflexividad, valores, significado) que en una imposibilidad fundamental de alcanzar conocimiento verdadero sobre lo social.</p>
                         </div>
                     </div>
                 </div>
@@ -266,42 +311,52 @@
 
             <section id="tema9" class="content-section">
                  <h2 class="text-2xl font-bold content-title">TEMA 9: NATURALEZA DE LEYES, TEORÍAS Y MODELOS CIENTÍFICOS</h2>
-                 <p class="content-intro">Analiza las estructuras del conocimiento científico y la distinción entre cómo se generan las ideas y cómo se validan.</p>
+                 <p class="content-intro">Este tema desglosa las estructuras fundamentales del conocimiento científico (leyes, teorías, modelos) y aborda la distinción clásica entre el proceso de generación de ideas (descubrimiento) y el de su validación (justificación).</p>
                  <div class="accordion">
                      <div class="accordion-item">
                         <button class="accordion-button"><span>Naturaleza de Leyes, Teorías y Modelos</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
-                            <ul>
-                                <li><strong>Leyes Científicas:</strong> Enunciados de regularidades (universales/estadísticas). Funciones: describir, predecir, explicar (Hempel). Debate: ¿descripción (humeano) o necesidad (realista)? Fundamentales vs. Fenomenológicas (Cartwright).</li>
-                                <li><strong>Teorías Científicas:</strong> Sistemas conceptuales amplios (leyes, principios, términos teóricos). Funciones: organizar, explicar, predecir, guiar. Estructura: Visión Sintáctica (axiomas, T/O, reglas - Emp. Lógico) vs. Semántica (clase de modelos - Suppes, Giere).</li>
-                                <li><strong>Modelos Científicos:</strong> Representaciones simplificadas/idealizadas. Funciones: explorar, predecir, explicar, visualizar. Mediadores entre teoría y realidad.</li>
-                            </ul>
+                            <h4>Leyes Científicas</h4>
+                            <p>Son enunciados que describen <strong>regularidades</strong> constantes observadas en la naturaleza, relacionando variables o eventos. Pueden ser universales (aplicables siempre bajo ciertas condiciones) o estadísticas. Su función es describir patrones, permitir la <strong>predicción</strong> y fundamentar la <strong>explicación</strong> científica (ej. modelo nomológico-deductivo de Hempel).</p>
+                            <p>Existe un debate filosófico sobre su estatus: ¿son meras descripciones de regularidades (visión humeana) o reflejan conexiones necesarias en la realidad (visión realista)? <strong>Nancy Cartwright</strong> distingue entre leyes fundamentales (explicativas pero idealizadas) y leyes fenomenológicas (más descriptivas y aplicables).</p>
+                            <h4>Teorías Científicas</h4>
+                             <p>Son sistemas conceptuales más amplios y complejos que las leyes. Integran un conjunto de leyes, principios y conceptos (incluyendo <strong>términos teóricos</strong> para entidades no observables) para ofrecer una explicación profunda y coherente de un dominio. Organizan el conocimiento, explican fenómenos y leyes, generan nuevas hipótesis y guían la investigación.</p>
+                             <p>Se debate su estructura: la <strong>Visión Sintáctica</strong> (Concepción Heredada del Empirismo Lógico) las ve como sistemas axiomáticos formales con vocabularios teórico/observacional conectados por reglas. La <strong>Visión Semántica</strong> (más actual) las identifica con la clase de <strong>modelos</strong> (estructuras matemáticas o conceptuales) que satisfacen sus postulados.</p>
+                             <h4>Modelos Científicos</h4>
+                             <p>Son <strong>representaciones simplificadas o idealizadas</strong> de sistemas, fenómenos o teorías. Pueden ser físicos, matemáticos, computacionales, etc. Actúan como herramientas cruciales: exploran teorías, generan predicciones, explican mecanismos, visualizan lo abstracto, guían experimentos. A menudo median entre la teoría abstracta y el mundo empírico complejo, basándose en la semejanza, analogía o isomorfismo.</p>
                         </div>
                     </div>
                      <div class="accordion-item">
                         <button class="accordion-button"><span>Contexto de Descubrimiento vs. Justificación</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
-                             <p><strong>Distinción Clásica (Reichenbach):</strong> Descubrimiento (generar ideas) vs. Justificación (validar ideas). Visión tradicional: solo justificación es filosófica.</p>
-                            <p><strong>Críticas:</strong> Artificialidad, interdependencia. Racionalidad en descubrimiento (Hanson, Peirce - abducción). Kuhn (paradigma influye). Feyerabend ("todo vale").</p>
-                            <p><strong>Modelos Alternativos:</strong> Laudan (resolución problemas), Echeverría (4 contextos: enseñanza, innovación, evaluación, aplicación).</p>
+                            <p><strong>Hans Reichenbach</strong> formalizó esta distinción:</p>
+                            <ul>
+                                <li><strong>Contexto de Descubrimiento:</strong> Proceso de generar nuevas ideas científicas (influencias psicológicas, sociales, casuales).</li>
+                                <li><strong>Contexto de Justificación:</strong> Proceso de evaluar, probar y validar esas ideas mediante evidencia y lógica.</li>
+                            </ul>
+                             <p>La visión tradicional (Empirismo Lógico, Popper) consideraba solo la justificación como objeto de análisis filosófico racional, relegando el descubrimiento a lo irracional o extralógico.</p>
+                             <p><strong>Críticas posteriores</strong> (Hanson, Kuhn, Feyerabend, Laudan) señalaron la artificialidad de la distinción, la interdependencia de ambos contextos en la práctica real, y la existencia de cierta racionalidad en el descubrimiento (ej. abducción de Peirce). Kuhn, en particular, mostró cómo los paradigmas influyen en ambos procesos y en los criterios de justificación.</p>
+                             <p><strong>Javier Echeverría</strong> amplió la visión a cuatro contextos para la tecnociencia: enseñanza, innovación (descubrimiento/invención), evaluación (justificación ampliada) y aplicación.</p>
                         </div>
                     </div>
                      <div class="accordion-item">
                         <button class="accordion-button"><span>Perspectivas Filosóficas sobre Leyes</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
+                            <p>El debate sobre qué son realmente las leyes de la naturaleza incluye:</p>
                              <ul>
-                                <li><strong>Realismo Nómico:</strong> Leyes describen relaciones objetivas y necesarias (Armstrong - universales).</li>
-                                <li><strong>Regularismo (Humeano):</strong> Leyes son descripciones de regularidades contingentes.</li>
-                                <li><strong>Antirrealismo/Instrumentalismo (Cartwright):</strong> Leyes fundamentales son idealizaciones, fenomenológicas son más descriptivas.</li>
+                                <li><strong>Realismo Nómico:</strong> Las leyes describen relaciones objetivas y necesarias en la naturaleza, a menudo entendidas como relaciones entre universales (Armstrong-Dretske-Tooley).</li>
+                                <li><strong>Regularismo (Visión Humeana):</strong> Las leyes son simplemente descripciones de regularidades contingentes observadas, sin necesidad natural subyacente. Enfrenta el problema de distinguir regularidades legales de las accidentales.</li>
+                                <li><strong>Antirrealismo/Instrumentalismo (Cartwright):</strong> Las leyes fundamentales son idealizaciones explicativas pero no literalmente verdaderas de la compleja realidad; las leyes fenomenológicas son más descriptivas y potencialmente verdaderas.</li>
                             </ul>
                         </div>
                     </div>
                      <div class="accordion-item">
                         <button class="accordion-button"><span>Teorías: Visiones Sintáctica vs. Semántica</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
+                             <p>Dos enfoques principales sobre la estructura de las teorías científicas:</p>
                              <ul>
-                                <li><strong>Visión Sintáctica (Concepción Heredada):</strong> Teorías como sistemas axiomáticos formalizados (Carnap, Hempel). Distinción T/O. Criticada por rigidez.</li>
-                                <li><strong>Visión Semántica (Modelo-Teórica):</strong> Teoría = clase de modelos que la satisfacen (Suppes, van Fraassen, Giere). Foco en estructuras y representación. Más cercana a la práctica científica.</li>
+                                <li><strong>Visión Sintáctica (Concepción Heredada):</strong> Dominante en la primera mitad del s. XX (Carnap, Hempel). Ve las teorías como sistemas axiomáticos formalizados en un lenguaje lógico-matemático, con una distinción clara entre términos teóricos (T) y observacionales (O), conectados por reglas de correspondencia. El foco está en la estructura lógica y la derivación. Fue criticada por la rigidez de la distinción T/O y las reglas.</li>
+                                <li><strong>Visión Semántica (Modelo-Teórica):</strong> Surgida como alternativa (Suppes, van Fraassen, Giere, Estructuralismo). Identifica la teoría no con su formulación lingüística, sino con la <strong>clase de modelos</strong> (estructuras matemáticas o conceptuales) que la satisfacen o la hacen verdadera. El foco está en las estructuras representadas y su relación con el mundo. Se considera más cercana a la práctica científica real (razonamiento con modelos) y maneja mejor la idealización y aproximación.</li>
                             </ul>
                         </div>
                     </div>
@@ -310,32 +365,47 @@
 
              <section id="tema10" class="content-section">
                  <h2 class="text-2xl font-bold content-title">TEMA 10: CONSTRUCCIÓN CIENTÍFICA DE LA REALIDAD, DETERMINISMO E INDETERMINISMO; EL POSTULADO DE LA OBJETIVIDAD</h2>
-                 <p class="content-intro">Examina cómo la ciencia modela la realidad, el debate sobre la predeterminación y el ideal de objetividad científica.</p>
+                 <p class="content-intro">Este tema profundiza en cuestiones metafísicas y epistemológicas clave: ¿cómo construye la ciencia la realidad que describe?, ¿es esa realidad determinista o hay lugar para el azar?, y ¿puede la ciencia alcanzar un conocimiento objetivo?</p>
                  <div class="accordion">
                      <div class="accordion-item">
                         <button class="accordion-button"><span>La Construcción Científica de la Realidad</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
+                             <p>El debate principal se da entre:</p>
                              <ul>
-                                <li><strong>Realismo Científico:</strong> Ciencia busca descripciones verdaderas (aprox.) de realidad independiente. Entidades teóricas reales ('no milagro'). Variantes: Crítico (Bhaskar), Estructural.</li>
-                                <li><strong>Constructivismo Social:</strong> Énfasis en factores sociales/culturales. 'Hechos' construidos. Estudios de Laboratorio (Latour), ANT, Hacking ('Making Up People', efecto bucle).</li>
+                                <li><strong>Realismo Científico:</strong> Sostiene que la ciencia busca descripciones verdaderas (o aproximadamente verdaderas) de una <strong>realidad independiente</strong> de nuestra mente. Las entidades postuladas por teorías exitosas (electrones, genes) se consideran reales. El "argumento del no milagro" sugiere que el éxito predictivo de la ciencia sería inexplicable si las teorías no fueran, al menos, parcialmente correctas sobre cómo es el mundo. Variantes incluyen el <strong>Realismo Crítico</strong> (Bhaskar) con su ontología estratificada (real, actual, empírico) y el <strong>Realismo Estructural</strong> que se enfoca en la correspondencia de la estructura matemática de las teorías con la realidad.</li>
+                                <li><strong>Constructivismo Social:</strong> Enfatiza el papel activo de factores <strong>sociales, culturales, históricos y lingüísticos</strong> en la formación del conocimiento científico. Los "hechos" científicos no se descubren pasivamente, sino que se construyen activamente a través de procesos de negociación, consenso y estabilización dentro de la comunidad científica. Ejemplos incluyen los <strong>Estudios de Laboratorio</strong> (Latour, Woolgar), la <strong>Teoría del Actor-Red (ANT)</strong>, y el trabajo de <strong>Ian Hacking</strong> sobre cómo las clasificaciones en ciencias humanas ("Making Up People") pueden interactuar con los clasificados ("efecto bucle").</li>
                             </ul>
+                            <p>Este debate tiene implicaciones sobre la autoridad epistémica de la ciencia.</p>
                         </div>
                     </div>
                      <div class="accordion-item">
                         <button class="accordion-button"><span>Determinismo e Indeterminismo</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
-                             <p><strong>Definiciones:</strong> Determinismo (todo evento es necesario) vs. Indeterminismo (existe azar/contingencia).</p>
-                            <p><strong>Argumentos Científicos:</strong> Mecánica Clásica (determinista), Cuántica (indeterminista en interp. estándar), Teoría del Caos (determinista pero impredecible).</p>
-                            <p><strong>Libre Albedrío:</strong> Incompatibilismo vs. Compatibilismo.</p>
+                            <p>Este debate metafísico cuestiona si el futuro está completamente predeterminado por el pasado y las leyes naturales.</p>
+                            <ul>
+                                <li><strong>Determinismo:</strong> Afirma que todo evento es el resultado necesario de causas antecedentes según leyes invariantes. Dado el estado del universo en un momento, solo un futuro es posible (visión del "demonio de Laplace").</li>
+                                <li><strong>Indeterminismo:</strong> Niega el determinismo, sosteniendo que al menos algunos eventos no están completamente determinados, permitiendo la existencia de <strong>azar genuino, contingencia o libre albedrío</strong>.</li>
+                            </ul>
+                             <h4>Argumentos Científicos:</h4>
+                             <p>La <strong>Mecánica Clásica</strong> newtoniana parecía apoyar un determinismo fuerte. Sin embargo, la <strong>Mecánica Cuántica</strong> (en su interpretación estándar de Copenhague) introduce un indeterminismo fundamental a nivel microscópico (principio de incertidumbre, colapso probabilístico). La <strong>Teoría del Caos</strong>, aunque estudia sistemas deterministas, revela una impredictibilidad práctica radical ("efecto mariposa"), mostrando que determinismo ontológico no implica predictibilidad epistémica.</p>
+                             <h4>Libre Albedrío:</h4>
+                              <p>El debate se extiende a la compatibilidad del libre albedrío con el determinismo: <strong>Incompatibilistas</strong> (o hay libre albedrío o hay determinismo) vs. <strong>Compatibilistas</strong> (ambos pueden coexistir).</p>
                         </div>
                     </div>
                      <div class="accordion-item">
                         <button class="accordion-button"><span>El Postulado de la Objetividad</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
-                             <p><strong>Definición Tradicional:</strong> Conocimiento independiente del sujeto, imparcial, neutral.</p>
-                             <p><strong>Weber:</strong> Neutralidad valorativa (Werturteilsfreiheit) vs. Relevancia valorativa (Wertbeziehung).</p>
-                            <p><strong>Críticas:</strong> Carga teórica (Hanson, Kuhn), Paradigmas (Kuhn), Epistemología Feminista (Haraway, Harding, Longino), Influencia de valores.</p>
-                            <p><strong>Reconceptualizaciones:</strong> Control de sesgos, perspectivas críticas, logro social/metodológico.</p>
+                            <p>La objetividad es un valor epistémico central tradicionalmente asociado a la ciencia, entendido como la capacidad de reflejar fielmente el objeto de estudio, independientemente de las creencias, valores o perspectivas del sujeto cognoscente.</p>
+                            <h4>Ideal Tradicional y Críticas:</h4>
+                            <p>Implica imparcialidad, neutralidad y eliminación de sesgos. <strong>Max Weber</strong> abogó por la "neutralidad valorativa" en ciencias sociales. Sin embargo, este ideal ha sido criticado desde diversas perspectivas:</p>
+                            <ul>
+                                <li><strong>Carga Teórica de la Observación</strong> (Hanson, Kuhn): La observación no es neutra, está influida por las teorías previas del observador.</li>
+                                <li><strong>Paradigmas e Inconmensurabilidad</strong> (Kuhn): Los criterios de objetividad pueden operar dentro de un paradigma, pero la elección entre paradigmas puede no ser totalmente objetiva.</li>
+                                <li><strong>Epistemología Feminista:</strong> Critica que el ideal tradicional puede enmascarar una perspectiva androcéntrica y propone alternativas como el <strong>Conocimiento Situado</strong> (Haraway), la <strong>Objetividad Fuerte</strong> (Harding, buscando perspectivas marginadas) o la <strong>Objetividad como Proceso Social</strong> (Longino, basada en la crítica intersubjetiva).</li>
+                                <li><strong>Influencia de Valores:</strong> Se reconoce que los valores (epistémicos y no epistémicos) influyen inevitablemente en la investigación.</li>
+                            </ul>
+                             <h4>Reconceptualizaciones:</h4>
+                             <p>La objetividad se entiende hoy más como un <strong>ideal regulativo</strong> y un <strong>logro metodológico y social</strong> (control de sesgos, transparencia, crítica intersubjetiva, diversidad de perspectivas) que como una ausencia total de perspectiva.</p>
                         </div>
                     </div>
                  </div>
@@ -343,27 +413,33 @@
 
              <section id="tema11" class="content-section">
                  <h2 class="text-2xl font-bold content-title">TEMA 11: CONOCIMIENTO Y LENGUAJE: EL PROBLEMA DE LOS CONCEPTOS UNIVERSALES</h2>
-                 <p class="content-intro">Explora la relación entre conocimiento y lenguaje, y el problema filosófico sobre la existencia y naturaleza de los conceptos generales.</p>
+                 <p class="content-intro">Este tema se adentra en la intrínseca relación entre el conocimiento y el lenguaje que usamos para expresarlo y estructurarlo, abordando el clásico problema filosófico de los universales (conceptos generales).</p>
                  <div class="accordion">
                      <div class="accordion-item">
                         <button class="accordion-button"><span>Interacción Conocimiento y Lenguaje</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
-                             <p>Lenguaje como vehículo y molde del pensamiento.</p>
-                            <p><strong>Hipótesis Sapir-Whorf:</strong> Lengua influye/determina pensamiento. Críticas: universales lingüísticos (Chomsky), lenguaje del pensamiento (Fodor, Pinker).</p>
-                            <p><strong>Wittgenstein:</strong> Tractatus (lenguaje figura hechos) vs. Investigaciones (juegos de lenguaje, significado=uso).</p>
-                            <p><strong>Hermenéutica (Gadamer):</strong> Lenguaje como medio universal de comprensión.</p>
+                            <p>El lenguaje no es solo un vehículo para comunicar el conocimiento, sino que también puede influir en cómo pensamos y estructuramos nuestra comprensión del mundo.</p>
+                            <h4>Relativismo Lingüístico:</h4>
+                            <p>La <strong>Hipótesis de Sapir-Whorf</strong> postula que la estructura de una lengua influye (versión débil) o determina (versión fuerte) la forma en que sus hablantes perciben y conceptualizan la realidad. La versión fuerte está mayormente desacreditada, pero la influencia (débil) del lenguaje en el pensamiento sigue siendo debatida frente a argumentos sobre <strong>universales lingüísticos</strong> (Chomsky) o un <strong>lenguaje del pensamiento</strong> innato e independiente ("mentalese" de Fodor, Pinker).</p>
+                            <h4>Perspectivas Filosóficas Clave:</h4>
+                            <ul>
+                                <li><strong>Wittgenstein:</strong> En el <em>Tractatus</em>, propone una teoría figurativa (el lenguaje representa hechos); los límites del lenguaje son los límites del mundo pensable. En las <em>Investigaciones Filosóficas</em>, cambia a una visión del lenguaje como "caja de herramientas" con múltiples usos en "juegos de lenguaje", donde el significado es el uso.</li>
+                                <li><strong>Hermenéutica (Gadamer):</strong> Considera el lenguaje como el medio universal de la comprensión; todo conocimiento está mediado lingüísticamente y la comprensión implica una "fusión de horizontes" a través del diálogo interpretativo.</li>
+                            </ul>
                         </div>
                     </div>
                      <div class="accordion-item">
                         <button class="accordion-button"><span>El Problema de los Conceptos Universales</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
-                             <p>¿Existen propiedades generales ('rojo', 'justicia') como entidades reales?</p>
+                            <p>Este problema metafísico, central en la filosofía medieval pero relevante hoy, pregunta por la naturaleza y el estatus ontológico de los conceptos generales o propiedades compartidas (como 'rojo', 'justicia', 'ser humano'): ¿Existen realmente estas propiedades universales, y dónde?</p>
+                            <h4>Posiciones Históricas Principales:</h4>
                             <ul>
-                                <li><strong>Realismo Exagerado (Platonismo):</strong> Universales existen separados (ante rem).</li>
-                                <li><strong>Realismo Moderado (Aristotelismo):</strong> Universales existen en las cosas (in re), conocidos por abstracción (post rem).</li>
-                                <li><strong>Nominalismo:</strong> Niega existencia real. Solo individuos. Términos son nombres/conceptos (Roscelino, Abelardo, Ockham, Quine).</li>
-                                <li><strong>Realismo Científico (Armstrong):</strong> Leyes como relaciones entre universales.</li>
-                            </ul>
+                                <li><strong>Realismo (Exagerado/Platónico):</strong> Los universales existen como entidades reales, separadas e independientes de las cosas particulares (<em>ante rem</em>), en un mundo inteligible (Mundo de las Ideas de Platón).</li>
+                                <li><strong>Realismo (Moderado/Aristotélico):</strong> Los universales existen, pero <em>en</em> las cosas particulares (<em>in re</em>) como su esencia o forma común. La mente los conoce por abstracción (<em>post rem</em>). (Tomás de Aquino).</li>
+                                <li><strong>Nominalismo:</strong> Niega la existencia real de los universales fuera de la mente o del lenguaje. Solo existen individuos particulares. Los términos generales son solo nombres (<em>nomina</em>), palabras (<em>flatus vocis</em> - Roscelino) o conceptos mentales (conceptualismo - Abelardo) que agrupan individuos similares. <strong>Ockham</strong> (nominalismo moderno) defiende que los universales son signos mentales, aplicando el principio de parsimonia ("Navaja de Ockham").</li>
+                             </ul>
+                             <h4>Relevancia Contemporánea:</h4>
+                             <p>El debate continúa en la filosofía contemporánea (ej. Quine sobre clases, Armstrong sobre universales como base de las leyes naturales en el realismo científico).</p>
                         </div>
                     </div>
                  </div>
@@ -371,35 +447,41 @@
 
             <section id="tema12" class="content-section">
                  <h2 class="text-2xl font-bold content-title">TEMA 12: LOS ELEMENTOS A PRIORI EN EL CONOCIMIENTO</h2>
-                 <p class="content-intro">Aborda el conocimiento cuya justificación es independiente de la experiencia sensorial.</p>
+                 <p class="content-intro">Este tema se enfoca en un tipo de conocimiento fundamental en filosofía: aquel cuya justificación no depende de la experiencia sensorial, explorando su naturaleza, alcance y las posturas históricas al respecto.</p>
                   <div class="accordion">
                      <div class="accordion-item">
                         <button class="accordion-button"><span>Definición, Contraste y Debate Histórico</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
-                             <p><strong>Conocimiento a priori:</strong> Justificación independiente de experiencia (universal, necesario - Lógica, Matemáticas).</p>
-                            <p><strong>Conocimiento a posteriori:</strong> Justificación basada en experiencia (contingente, particular - CC. Empíricas).</p>
-                            <p><strong>Debate:</strong> Racionalismo (admite a priori sustantivo - Descartes) vs. Empirismo (niega/minimiza a priori - Locke, Hume).</p>
+                            <h4>Definiciones Clave:</h4>
+                            <ul>
+                                <li><strong>Conocimiento a priori:</strong> Se justifica independientemente de la experiencia. Se considera a menudo universal y necesario. Ejemplos paradigmáticos se encuentran en la lógica ("Ningún soltero es casado") y las matemáticas ("2+2=4").</li>
+                                <li><strong>Conocimiento a posteriori:</strong> Requiere justificación basada en la experiencia sensorial. Es típicamente contingente (podría ser de otra manera) y particular. Es el conocimiento propio de las ciencias empíricas ("El agua hierve a 100°C al nivel del mar").</li>
+                            </ul>
+                             <h4>Debate Racionalismo vs. Empirismo:</h4>
+                             <p>Históricamente, el <strong>Racionalismo</strong> (ej. Descartes, Leibniz) enfatizó la razón como fuente de conocimiento y admitió la existencia de conocimiento a priori sustantivo (ideas innatas, principios evidentes). El <strong>Empirismo</strong> (ej. Locke, Hume) sostuvo que todo conocimiento deriva en última instancia de la experiencia, negando o minimizando el conocimiento a priori significativo sobre el mundo.</p>
                         </div>
                     </div>
                      <div class="accordion-item">
                         <button class="accordion-button"><span>La Síntesis Kantiana</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
-                             <p>Conocimiento empieza con experiencia, pero no todo procede de ella.</p>
+                            <p><strong>Immanuel Kant</strong> intentó superar la dicotomía Racionalismo/Empirismo en su <em>Crítica de la Razón Pura</em>. Argumentó que, aunque todo conocimiento comienza <em>con</em> la experiencia, no todo procede <em>de</em> ella.</p>
+                            <h4>Elementos a priori según Kant:</h4>
                             <ul>
-                                <li><strong>Formas a priori de la Sensibilidad:</strong> Espacio y Tiempo.</li>
-                                <li><strong>Categorías a priori del Entendimiento:</strong> Conceptos puros que estructuran pensamiento (sustancia, causalidad).</li>
-                                <li><strong>Juicios Sintéticos a priori:</strong> A priori pero añaden información (matemáticas, principios física).</li>
-                                <li><strong>Distinción Analítico/Sintético.</strong></li>
-                            </ul>
+                                <li><strong>Formas Puras de la Sensibilidad:</strong> El <strong>Espacio</strong> y el <strong>Tiempo</strong> no son propiedades de las cosas en sí mismas, sino las formas a priori (estructuras innatas de nuestra mente) a través de las cuales percibimos cualquier objeto externo (espacio) o interno (tiempo). Son condiciones necesarias de toda experiencia posible.</li>
+                                <li><strong>Categorías del Entendimiento:</strong> Son conceptos puros (ej. causalidad, sustancia, unidad) que no derivan de la experiencia, sino que el entendimiento impone a priori para estructurar y unificar los datos sensibles, permitiendo así el pensamiento objetivo sobre los fenómenos.</li>
+                             </ul>
+                             <h4>Juicios Sintéticos a Priori:</h4>
+                             <p>Kant introdujo una distinción clave entre juicios <strong>analíticos</strong> (el predicado está contenido en el sujeto, son explicativos, ej. "los cuerpos son extensos") y <strong>sintéticos</strong> (el predicado añade información nueva, son extensivos, ej. "los cuerpos son pesados"). Argumentó que, además de los juicios analíticos a priori y los sintéticos a posteriori, existen <strong>juicios sintéticos a priori</strong>: son universales y necesarios (a priori) pero amplían nuestro conocimiento (sintéticos). Consideró que las matemáticas y los principios fundamentales de la física (como la causalidad) se basan en este tipo de juicios.</p>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <button class="accordion-button"><span>Críticas Posteriores</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
+                            <p>La concepción kantiana del conocimiento a priori ha sido objeto de intenso debate:</p>
                             <ul>
-                                <li><strong>Empirismo Lógico:</strong> Reduce a priori a analítico (convención lingüística).</li>
-                                <li><strong>Quine:</strong> Crítica a distinción analítico/sintético, holismo epistemológico.</li>
-                                <li><strong>Kripke:</strong> Necesario a posteriori (Agua=H2O) y Contingente a priori (barra estándar).</li>
+                                <li><strong>Empirismo Lógico (s. XX):</strong> Intentó eliminar los juicios sintéticos a priori, argumentando que las verdades de la lógica y las matemáticas son <strong>analíticas</strong>, verdaderas por definición o convención lingüística, y por tanto, no nos dicen nada sustantivo sobre el mundo.</li>
+                                <li><strong>W.V.O. Quine:</strong> En su influyente artículo "Dos dogmas del empirismo", atacó la propia distinción entre enunciados analíticos y sintéticos, argumentando que es insostenible. Propuso un <strong>holismo epistemológico</strong> donde ninguna creencia está totalmente a salvo de revisión a la luz de la experiencia, difuminando la frontera a priori/a posteriori.</li>
+                                <li><strong>Saul Kripke:</strong> Distinguió las categorías metafísicas (necesidad/contingencia) de las epistemológicas (a priori/a posteriori). Argumentó la existencia de <strong>verdades necesarias a posteriori</strong> (descubiertas empíricamente, ej. "Agua es H₂O") y <strong>verdades contingentes a priori</strong> (conocidas independientemente de la experiencia pero que podrían haber sido falsas, ej. la definición estipulativa de la barra de metro estándar).</li>
                             </ul>
                         </div>
                     </div>
@@ -408,23 +490,54 @@
 
              <section id="tema13" class="content-section">
                  <h2 class="text-2xl font-bold content-title">TEMA 13: LOS LÍMITES DEL CONOCIMIENTO HUMANO Y EL PROBLEMA DE LO IRRACIONAL</h2>
-                 <p class="content-intro">Examina las fronteras del saber humano y el estatus de lo que escapa a la razón.</p>
+                 <p class="content-intro">Este tema final explora las fronteras de lo que podemos conocer como seres humanos y aborda el estatus filosófico de aquello que parece escapar o contraponerse a la razón.</p>
                  <div class="accordion">
                      <div class="accordion-item">
                         <button class="accordion-button"><span>Los Límites del Conocimiento Humano</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
-                             <p><strong>Perspectivas Históricas:</strong> Antigüedad/Medievo (límite=ser), Modernidad (Locke, Hume - experiencia; Kant - fenómeno vs. noúmeno).</p>
-                             <p><strong>Tipos de Límites:</strong> Prácticos vs. Teóricos, Intrínsecos (razón), Lingüísticos (Wittgenstein), Metodológicos (Popper), Formalización (Gödel), Objetividad, Predictibilidad (Caos), Complejidad.</p>
-                             <p><strong>Agnosticismo:</strong> Imposibilidad de conocer ciertas realidades.</p>
+                            <p>La filosofía ha reflexionado constantemente sobre si existen límites inherentes a nuestra capacidad de conocer y dónde se encuentran.</p>
+                             <h4>Perspectivas Históricas:</h4>
+                             <p>Mientras que en la antigüedad el límite solía verse en la propia realidad cognoscible, en la Modernidad el foco se desplaza a las <strong>limitaciones de nuestras facultades</strong>:</p>
+                             <ul>
+                                 <li><strong>Empiristas (Locke, Hume):</strong> El límite fundamental es la <strong>experiencia</strong> sensible. No podemos conocer esencias internas (Locke) ni justificar la causalidad o la inducción (Hume), llevando a un escepticismo moderado.</li>
+                                 <li><strong>Kant:</strong> Establece límites precisos para la razón teórica. Solo podemos conocer <strong>fenómenos</strong> (la realidad tal como se nos aparece, estructurada por nuestras formas a priori), pero no <strong>noúmenos</strong> (las cosas en sí mismas). La metafísica tradicional que intenta trascender la experiencia es imposible como ciencia.</li>
+                             </ul>
+                              <h4>Tipos de Límites Explorados:</h4>
+                              <ul>
+                                  <li><strong>Prácticos vs. Teóricos:</strong> ¿Son límites superables o inherentes?</li>
+                                  <li><strong>Lingüísticos (Wittgenstein):</strong> Los límites del lenguaje con sentido (Tractatus) o de los juegos de lenguaje (Investigaciones).</li>
+                                  <li><strong>Metodológicos (Popper):</strong> El conocimiento científico es falible y conjetural (falsacionismo, problema de la inducción).</li>
+                                  <li><strong>Formalización (Gödel):</strong> Límites inherentes a los sistemas formales (incompletitud).</li>
+                                  <li><strong>Objetividad:</strong> Límites impuestos por la carga teórica, valores, perspectiva situada.</li>
+                                  <li><strong>Predictibilidad (Teoría del Caos):</strong> Límites prácticos incluso en sistemas deterministas.</li>
+                                  <li><strong>Complejidad:</strong> Límites impuestos por la complejidad de los sistemas estudiados.</li>
+                              </ul>
+                              <p>El <strong>Agnosticismo</strong> es la postura que afirma la imposibilidad de conocer ciertas realidades (metafísicas, divinas).</p>
                         </div>
                     </div>
                      <div class="accordion-item">
                         <button class="accordion-button"><span>El Problema de lo Irracional</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
-                             <p><strong>Definiciones:</strong> Contrario/ajeno/inferior/superior/opuesto a la razón. No racional vs. Irracional.</p>
-                             <p><strong>Irracionalidad Cognitiva (Kahneman & Tversky):</strong> Sesgos y heurísticas.</p>
-                             <p><strong>En la Filosofía:</strong> Tradición racionalista, Kant, Hegel, Irracionalistas (Schopenhauer, Kierkegaard, Nietzsche), Fenomenología/Existencialismo, Psicoanálisis (Freud), Intuicionismo (Bergson).</p>
-                             <p>Lo Irracional como límite de la razón.</p>
+                            <p>Se aborda filosóficamente aquello que escapa, se opone o parece ajeno a la razón.</p>
+                            <h4>Definiciones y Distinciones:</h4>
+                            <p>Lo "irracional" puede significar: contrario a la lógica, ajeno a la razón (arracional), inferior (pasiones), superior (fe, mística) u opuesto activamente (antirracional). Se distingue a veces de lo meramente "no racional". La <strong>irracionalidad cognitiva</strong> (Kahneman & Tversky) estudia sesgos sistemáticos en el juicio humano.</p>
+                            <h4>Lo Irracional en la Filosofía:</h4>
+                            <ul>
+                                <li><strong>Tradición Racionalista:</strong> A menudo visto negativamente, como perturbación de la razón.</li>
+                                <li><strong>Kant:</strong> Lo que transgrede los límites de la razón teórica (noúmeno).</li>
+                                <li><strong>Hegel:</strong> Intento de integrar lo irracional dialécticamente en la Razón Absoluta.</li>
+                                <li><strong>Filosofías Irracionalistas (s. XIX-XX):</strong> Reacción al racionalismo excesivo, afirmando la primacía de aspectos no racionales:
+                                    <ul>
+                                        <li><strong>Schopenhauer:</strong> La Voluntad como esencia irracional del mundo.</li>
+                                        <li><strong>Kierkegaard:</strong> Énfasis en la fe, la subjetividad, lo absurdo.</li>
+                                        <li><strong>Nietzsche:</strong> Crítica a la razón, afirmación de la voluntad de poder, instintos.</li>
+                                    </ul>
+                                </li>
+                                 <li><strong>Fenomenología y Existencialismo:</strong> Exploran la experiencia vivida, incluyendo aspectos no racionales.</li>
+                                 <li><strong>Psicoanálisis (Freud):</strong> El inconsciente con su propia lógica (proceso primario).</li>
+                                 <li><strong>Intuicionismo (Bergson):</strong> La intuición capta la duración real (fluir) que escapa al intelecto analítico.</li>
+                            </ul>
+                            <p>Lo irracional puede verse como aquello que marca los límites de la razón, lo que esta no puede explicar o subsumir completamente.</p>
                         </div>
                     </div>
                  </div>
@@ -466,14 +579,12 @@
             button.classList.add('open');
             button.setAttribute('aria-expanded', 'true');
             content.classList.add('open');
-            // No se establece max-height en JS, se usa el valor fijo de CSS
         }
 
         function closeAccordion(button, content) {
             button.classList.remove('open');
             button.setAttribute('aria-expanded', 'false');
             content.classList.remove('open');
-            // No se necesita quitar max-height de JS
         }
 
         accordionButtons.forEach(button => {
@@ -485,6 +596,15 @@
                     if (isOpen) {
                         closeAccordion(button, content);
                     } else {
+                        // Opcional: cerrar otros acordeones al abrir uno nuevo
+                         const parentAccordion = button.closest('.accordion');
+                         if (parentAccordion) {
+                             parentAccordion.querySelectorAll('.accordion-button.open').forEach(openButton => {
+                                 if (openButton !== button) { // No cerrar el que se está abriendo
+                                     closeAccordion(openButton, openButton.nextElementSibling);
+                                 }
+                             });
+                         }
                         openAccordion(button, content);
                     }
                 });
@@ -512,22 +632,18 @@
 
         scrollLeftBtn.addEventListener('click', () => {
             themeNavContainer.scrollLeft -= scrollAmount;
-            // Re-chequear botones después de un breve instante para que el scroll termine
-            setTimeout(checkScrollButtons, 150);
+            setTimeout(checkScrollButtons, 150); // Re-check after scroll animation
         });
 
         scrollRightBtn.addEventListener('click', () => {
             themeNavContainer.scrollLeft += scrollAmount;
-            // Re-chequear botones después de un breve instante
-            setTimeout(checkScrollButtons, 150);
+            setTimeout(checkScrollButtons, 150); // Re-check after scroll animation
         });
 
         // Verificar estado de botones al cargar, al hacer scroll y al redimensionar
         themeNavContainer.addEventListener('scroll', checkScrollButtons);
         window.addEventListener('resize', checkScrollButtons);
-
-        // Llamada inicial para establecer el estado correcto de los botones
-        // Usar setTimeout para asegurar que el layout esté calculado
+        // Initial check
         setTimeout(checkScrollButtons, 100);
 
 
