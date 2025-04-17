@@ -11,12 +11,16 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc; /* Fondo gris muy claro */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Asegurar que el footer quede abajo */
         }
         /* Estilo para el contenedor principal */
         .main-container {
             max-width: 1200px; /* Ancho máximo */
             margin: 0 auto; /* Centrado */
             padding: 1.5rem;
+            flex-grow: 1; /* Ocupa el espacio disponible */
         }
         /* Estilo para el encabezado */
         .panel-header {
@@ -189,6 +193,16 @@
             padding-left: 0.75rem;
         }
 
+        /* Estilo para el pie de página */
+        .panel-footer {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem; /* Espacio sobre el footer */
+            font-size: 0.875rem; /* Texto pequeño */
+            color: #64748b; /* Color gris */
+            border-top: 1px solid #e2e8f0; /* Línea divisoria sutil */
+        }
+
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -227,10 +241,7 @@
                 <p class="content-intro">Este tema examina la noción crucial de 'verdad', explorando cómo su significado y los criterios para establecerla difieren entre las matemáticas (ciencias formales) y las ciencias empíricas (naturales y sociales), así como las diversas teorías filosóficas propuestas para comprenderla.</p>
                 <div class="accordion">
                     <div class="accordion-item">
-                        <button class="accordion-button">
-                            <span>Teorías Fundamentales de la Verdad</span>
-                            <i class="fas fa-chevron-right accordion-icon"></i>
-                        </button>
+                        <button class="accordion-button"><span>Teorías Fundamentales de la Verdad</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
                             <p>Las teorías filosóficas buscan responder qué es la verdad y cómo distinguirla del error. Las principales son:</p>
                             <h4>1. Teoría de la Correspondencia</h4>
@@ -248,10 +259,7 @@
                         </div>
                     </div>
                     <div class="accordion-item">
-                        <button class="accordion-button">
-                            <span>Verdad en Matemáticas (Ciencias Formales)</span>
-                            <i class="fas fa-chevron-right accordion-icon"></i>
-                        </button>
+                        <button class="accordion-button"><span>Verdad en Matemáticas (Ciencias Formales)</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
                             <p>Las matemáticas, como ciencia formal, tratan con entidades abstractas e ideales, no con hechos empíricos.</p>
                             <h4>Naturaleza de la Verdad Matemática:</h4>
@@ -275,10 +283,7 @@
                         </div>
                     </div>
                      <div class="accordion-item">
-                        <button class="accordion-button">
-                            <span>Verdad en Ciencias Empíricas (Naturales y Sociales)</span>
-                            <i class="fas fa-chevron-right accordion-icon"></i>
-                        </button>
+                        <button class="accordion-button"><span>Verdad en Ciencias Empíricas (Naturales y Sociales)</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
                              <p>Las ciencias empíricas buscan describir, explicar y predecir fenómenos del mundo real basándose en la observación y experimentación.</p>
                              <h4>Naturaleza de la Verdad Empírica:</h4>
@@ -295,10 +300,7 @@
                         </div>
                     </div>
                      <div class="accordion-item">
-                        <button class="accordion-button">
-                            <span>Análisis Comparativo y Síntesis</span>
-                            <i class="fas fa-chevron-right accordion-icon"></i>
-                        </button>
+                        <button class="accordion-button"><span>Análisis Comparativo y Síntesis</span><i class="fas fa-chevron-right accordion-icon"></i></button>
                         <div class="accordion-content">
                              <p>La verdad matemática se basa en la <strong>coherencia</strong> interna, es <strong>a priori</strong> y formal. La verdad empírica aspira a la <strong>correspondencia</strong> con hechos, es <strong>a posteriori</strong>, provisional y se valida por contrastación (idealmente, falsación).</p>
                              <p>Las diferentes filosofías (logicismo, formalismo, intuicionismo en matemáticas; empirismo lógico, falsacionismo, realismo en CC. empíricas) reflejan estas diferencias.</p>
@@ -545,6 +547,13 @@
 
         </main>
     </div>
+
+    <footer class="panel-footer">
+        <p>
+            Este panel utiliza recursos externos (fuentes y estilos de CDNs como Google Fonts, Font Awesome, Tailwind CSS) para mejorar su funcionalidad y apariencia.
+            Estos servicios pueden recopilar datos técnicos según sus propias políticas de privacidad. Este sitio no utiliza cookies propias para rastrear tu actividad.
+        </p>
+    </footer>
 
     <script>
         // Selección de elementos del DOM
